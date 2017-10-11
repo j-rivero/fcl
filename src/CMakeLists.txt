@@ -3,6 +3,9 @@ if(FCL_STATIC_LIBRARY)
   add_library(${PROJECT_NAME} STATIC ${FCL_HEADERS} ${FCL_SOURCE_CODE})
 else()
   add_library(${PROJECT_NAME} SHARED ${FCL_HEADERS} ${FCL_SOURCE_CODE})
+  set_target_properties(${PROJECT_NAME} PROPERTIES
+      COMPILE_DEFINITIONS FCL_EXPORTS
+      DEFINE_SYMBOL FCL_EXPORTS)
 endif()
 
 # Be sure to pass to the consumer the set of SIMD used in the compilation

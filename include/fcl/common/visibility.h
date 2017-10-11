@@ -24,20 +24,25 @@
  */
 
 #if defined _WIN32 || defined __CYGWIN__
-  #ifdef BUILDING_DLL
-    #ifdef __GNUC__
-      #define FCL_VISIBLE __attribute__ ((dllexport))
-    #else
-      #define FCL_VISIBLE __declspec(dllexport)
-    #endif
+  #ifdef FCL_STATIC_LIBRARY
+    #define FCL_VISIBLE
+    #define FCL_HIDDEN
   #else
-    #ifdef __GNUC__
-      #define FCL_VISIBLE __attribute__ ((dllimport))
+    #ifdef FCL_EXPORTS
+      #ifdef __GNUC__
+        #define FCL_VISIBLE __attribute__ ((dllexport))
+      #else
+        #define FCL_VISIBLE __declspec(dllexport)
+      #endif
     #else
-      #define FCL_VISIBLE __declspec(dllimport)
+      #ifdef __GNUC__
+        #define FCL_VISIBLE __attribute__ ((dllimport))
+      #else
+        #define FCL_VISIBLE __declspec(dllimport)
+      #endif
     #endif
+    #define FCL_HIDDEN
   #endif
-  #define FCL_HIDDEN
 #else
   #ifdef FCL_HIDE_ALL_SYMBOLS
     #define FCL_VISIBLE __attribute__ ((visibility ("hidden")))
